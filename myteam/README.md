@@ -1,30 +1,42 @@
-           ┌──────────────────────┐
-           │ User Question         │
-           └───────────────┬──────┘
-                           ▼
-                  ┌──────────────────┐
-                  │ Trigger Agent     │
-                  │ (intent JSON)     │
-                  └───────┬──────────┘
-        ┌───────────────────────────────┬──────────────────────────┐
-        ▼                               ▼                          ▼
-┌──────────────────┐         ┌──────────────────┐       ┌────────────────────┐
-│ MJ_BI Engine      │         │ MJ_SCOTIA Engine │       │ Orchestrator Agent │
-│ (fast insights)   │         │ (deep analysis)  │       │ (fallback LLM)     │
-└───────────────────┘         └──────────────────┘       └────────────────────┘
-        ▼                               ▼                          ▼
-                                (result returned to UI)
+## 🔄 System Flow Overview
+               ┌──────────────────────┐
+               │     User Question    │
+               └───────────────┬──────┘
+                               ▼
+                      ┌──────────────────┐
+                      │  Trigger Agent    │
+                      │   (intent JSON)   │
+                      └─────────┬─────────┘
+         ┌──────────────────────┼──────────────────────────┐
+         ▼                      ▼                          ▼
+┌──────────────────┐   ┌──────────────────┐       ┌────────────────────┐
+│   MJ_BI Engine    │   │  MJ_SCOTIA Engine │       │  Orchestrator Agent │
+│ (fast insights)   │   │ (deep analysis)   │       │   (fallback LLM)    │
+└───────────────────┘   └──────────────────┘       └────────────────────┘
+         ▼                      ▼                          ▼
+                         (result returned to UI)
 
 ---
-trigger_connect.py — Main app entry; routes questions → MJ_BI / MJ_SCOTIA / Orchestrator; runs Gradio UI.
-info_retrieval_prompt_intent.py — from Jessie; Trigger Agent prompt; classifies intent (data_insight, deep_analysis, etc.).
-MJ_BI.py — from MJ; Fast BI engine using Pandas; simple insights (segment revenue, averages, group-by).
-MJ_SCOTIA.py — from MJ; Deep multi-metric analysis engine; executes generated code; heavy insights.
-knowledgebase.py — Placeholder RAG/KB interface (future expansion).
-dataset_tools.py — Utility functions for loading, summarizing, and analyzing banking dataset.
-dataset_definitions.py — Metadata definitions for dataset schema and column descriptions.
-Retrival_UI_test.py — from Jessie; use to test UI for experimenting with retrieval agent separately; not used. 
-trigger_connect copy.py — Backup of old main file; not used.
+## 📁 File Responsibilities (Concise Summary)
+
+**trigger_connect.py** — Main app entry; routes questions → MJ_BI / MJ_SCOTIA / Orchestrator; runs Gradio UI.
+
+**info_retrieval_prompt_intent.py** — Trigger Agent prompt; classifies intent (data_insight, deep_analysis, etc.).
+
+**MJ_BI.py** — Fast BI engine using Pandas; simple insights (segment revenue, averages, group-by).
+
+**MJ_SCOTIA.py** — Deep multi-metric analysis engine; executes generated code; heavy insights.
+
+**knowledgebase.py** — Placeholder RAG/KB interface (future expansion).
+
+**dataset_tools.py** — Utility functions for loading, summarizing, and analyzing banking dataset.
+
+**dataset_definitions.py** — Metadata definitions for dataset schema and column descriptions.
+
+**Retrival_UI_test.py** — UI test for experimenting with retrieval agent separately; not used.
+
+**trigger_connect copy.py** — Backup of old main file; not used.
+
 ---
 
 # System Architecture – File Responsibilities and Connections
