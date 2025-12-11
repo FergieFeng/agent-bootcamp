@@ -28,3 +28,4 @@ site/
 
 # Gradio "share=True" utils.
 /.gradio
+temp_banking_data.csv
